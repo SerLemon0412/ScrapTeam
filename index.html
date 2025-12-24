@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru" class="noise-bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ScrapTeam — команда разработчиков</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-dark animations-on">
+
+  <!-- Новогодняя тема: гирлянда -->
+  <div class="christmas-lights">
+    <div class="light"></div><div class="light"></div><div class="light"></div>
+    <div class="light"></div><div class="light"></div><div class="light"></div>
+    <div class="light"></div><div class="light"></div><div class="light"></div>
+  </div>
+
+  <!-- 3D Снежинки (для перспективы) -->
+  <div class="snowflakes-3d">
+    <div class="snowflake-3d"></div>
+    <div class="snowflake-3d"></div>
+    <div class="snowflake-3d"></div>
+    <div class="snowflake-3d"></div>
+    <div class="snowflake-3d"></div>
+  </div>
+
+  <!-- Парящие шары -->
+  <div class="floating-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="pageTransition" class="page-transition" aria-hidden="true"></div>
+
+  <!-- Обновленный Header с 3D эффектом -->
+  <header class="site-header" id="siteHeader">
+    <div class="brand-3d">
+      <div class="logo-3d">
+        <img src="Logo.png" alt="ScrapTeam" class="logo" />
+        <div class="logo-glow"></div>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name glitch-text" data-text="ScrapTeam">ScrapTeam</div>
+        <div class="brand-sub neon-text">карты · модели · туториалы</div>
+      </div>
+    </div>
+
+    <nav class="site-nav" id="siteNav">
+      <a class="nav-link nav-3d" href="#home" data-route>
+        <i class="fas fa-home"></i> Главная
+      </a>
+      <a class="nav-link nav-3d" href="#events" data-route>
+        <i class="fas fa-calendar-alt"></i> Ивенты
+      </a>
+      <a class="nav-link nav-3d" href="#workshop" data-route>
+        <i class="fas fa-tools"></i> Мастерская
+      </a>
+      <a class="nav-link nav-3d" href="#thanks" data-route>
+        <i class="fas fa-heart"></i> Благодарности
+      </a>
+      <a class="nav-link nav-3d" href="#bad" data-route>
+        <i class="fas fa-skull-crossbones"></i> Плохие люди
+      </a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="settingsToggle" class="btn btn-outline settings-btn btn-3d" aria-expanded="false">
+        <i class="fas fa-cog fa-spin"></i> Настройки
+      </button>
+      <button id="themeToggle" class="btn btn-ghost btn-3d">
+        <i class="fas fa-palette"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Улучшенная Settings panel -->
+  <aside id="settingsPanel" class="settings-panel glass-panel" aria-hidden="true">
+    <div class="settings-header">
+      <h3 class="panel-title neon-text"><i class="fas fa-sliders-h"></i> Настройки</h3>
+      <button id="settingsClose" class="btn btn-icon btn-3d" aria-label="Закрыть">✕</button>
+    </div>
+
+    <div class="settings-body">
+      <div class="setting fade-item slide-in">
+        <label><i class="fas fa-moon"></i> Тема
+          <div class="toggle-switch">
+            <input type="checkbox" id="themeToggleSwitch" hidden>
+            <label for="themeToggleSwitch" class="toggle-slider">
+              <span class="toggle-text-dark">Тёмная</span>
+              <span class="toggle-text-light">Светлая</span>
+            </label>
+          </div>
+        </label>
+      </div>
+
+      <div class="setting fade-item slide-in">
+        <label><i class="fas fa-film"></i> Анимации
+          <div class="toggle-switch">
+            <input type="checkbox" id="toggleAnimations" checked hidden>
+            <label for="toggleAnimations" class="toggle-slider"></label>
+          </div>
+        </label>
+      </div>
+
+      <div class="setting fade-item slide-in">
+        <label><i class="fas fa-shield-alt"></i> Защита (блок контекстного меню)
+          <div class="toggle-switch">
+            <input type="checkbox" id="toggleGuard" hidden>
+            <label for="toggleGuard" class="toggle-slider"></label>
+          </div>
+        </label>
+      </div>
+
+      <div class="setting fade-item slide-in">
+        <label><i class="fas fa-snowflake"></i> Снег
+          <div class="toggle-switch">
+            <input type="checkbox" id="toggleSnow" checked hidden>
+            <label for="toggleSnow" class="toggle-slider"></label>
+          </div>
+        </label>
+      </div>
+
+      <div class="setting fade-item slide-in">
+        <label><i class="fas fa-star"></i> Звёздный дождь
+          <div class="toggle-switch">
+            <input type="checkbox" id="toggleStars" hidden>
+            <label for="toggleStars" class="toggle-slider"></label>
+          </div>
+        </label>
+      </div>
+
+      <div class="setting fade-item slide-in">
+        <label><i class="fas fa-volume-up"></i> Звуковые эффекты
+          <div class="toggle-switch">
+            <input type="checkbox" id="toggleSound" checked hidden>
+            <label for="toggleSound" class="toggle-slider"></label>
+          </div>
+        </label>
+      </div>
+
+      <div class="setting fade-item slide-in">
+        <button id="resetSettings" class="btn btn-outline btn-3d pulse">
+          <i class="fas fa-redo"></i> Сбросить настройки
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Эффекты -->
+  <canvas id="snowCanvas" class="effects-canvas"></canvas>
+  <canvas id="confettiCanvas" class="effects-canvas"></canvas>
+  <canvas id="starsCanvas" class="effects-canvas"></canvas>
+  <div id="particlesContainer" class="particles-container"></div>
+
+  <main id="mainContent">
+    <!-- Home с фоновым изображением -->
+    <section id="home" class="section fullpage parallax-section" 
+             style="background-image: url('https://gaming-cdn.com/img/products/5722/pcover/5722.jpg?v=1710512685')"
+             data-title="Главная" data-color="#7c5cff">
+      <div class="section-overlay"></div>
+      <div class="section-inner floating">
+        <h1 class="section-title fade-item large glitch-text" data-text="Мы — команда разработчиков">
+          Мы — команда разработчиков
+        </h1>
+        <p class="section-sub fade-item neon-text">Делаем модели, карты, туториалы и ивенты. Добро пожаловать.</p>
+        <div class="section-actions fade-item">
+          <a class="btn btn-primary btn-3d hover-grow" href="#events" data-route>
+            <i class="fas fa-arrow-right"></i> К ивентам
+          </a>
+          <button class="btn btn-accent btn-3d hover-grow" id="confettiBtn">
+            <i class="fas fa-birthday-cake"></i> Запустить конфетти
+          </button>
+          <button class="btn btn-ghost btn-3d hover-grow" id="fireworksBtn">
+            <i class="fas fa-fire"></i> Фейерверк
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events с фоновым изображением -->
+    <section id="events" class="section fullpage parallax-section" 
+             style="background-image: url('https://images.gamewatcherstatic.com/image/file/8/42/107528/scrap_mechanic_65546454.JPG')"
+             data-title="Ивенты" data-color="#39e5a8">
+      <div class="section-overlay"></div>
+      <div class="section-inner floating">
+        <h2 class="section-title fade-item large glitch-text" data-text="Ивенты">Ивенты</h2>
+        <p class="section-sub fade-item">New 2026 — праздничная карта, мини‑ивенты и тесты.</p>
+        <div class="cards fade-item">
+          <article class="card card-3d hover-3d">
+            <div class="card-glow"></div>
+            <h3><i class="fas fa-gift"></i> New 2026</h3>
+            <p>Праздничная локация, сюрпризы и совместные тесты.</p>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-3d hover-grow">Подробнее</button>
+              <a class="btn btn-accent btn-3d hover-grow" href="https://steamcommunity.com/chat/invite/Ymyg6Bz0" target="_blank" rel="noopener">
+                <i class="fab fa-steam"></i> Вступить
+              </a>
+            </div>
+          </article>
+          <article class="card card-3d hover-3d">
+            <div class="card-glow"></div>
+            <h3><i class="fas fa-snowman"></i> Зимний ивент</h3>
+            <p>Снежные битвы, подарки и новогодние сюрпризы.</p>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-3d hover-grow">Участвовать</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workshop с фоновым изображением -->
+    <section id="workshop" class="section fullpage parallax-section" 
+             style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGhDZYXjmyX5KGV7R_uoIt8fzW1Hjeg5OjhQ&s')"
+             data-title="Мастерская" data-color="#7c5cff">
+      <div class="section-overlay"></div>
+      <div class="section-inner floating">
+        <h2 class="section-title fade-item large glitch-text" data-text="Наша мастерская">Наша мастерская</h2>
+        <p class="section-sub fade-item">Инструменты, шаблоны и интерактивные уроки — скоро откроем.</p>
+        <div class="workshop-tools fade-item">
+          <div class="tool" data-tool="hammer">
+            <i class="fas fa-hammer"></i>
+            <span>Инструменты</span>
+          </div>
+          <div class="tool" data-tool="code">
+            <i class="fas fa-code"></i>
+            <span>Шаблоны</span>
+          </div>
+          <div class="tool" data-tool="book">
+            <i class="fas fa-book"></i>
+            <span>Уроки</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Thanks -->
+    <section id="thanks" class="section fullpage parallax-section" 
+             style="background-image: url('https://gaming-cdn.com/img/products/5722/pcover/5722.jpg?v=1710512685')"
+             data-title="Благодарности" data-color="#ffaa2b">
+      <div class="section-overlay"></div>
+      <div class="section-inner floating">
+        <h2 class="section-title fade-item large glitch-text" data-text="Благодарности проекта">Благодарности проекта</h2>
+        <ul class="people">
+          <li class="person fade-item card-3d hover-glow">
+            <div class="person-avatar">
+              <i class="fas fa-user-hard-hat"></i>
+            </div>
+            <div class="person-info">
+              <strong>@=Zen=</strong> — строитель
+            </div>
+            <a href="https://steamcommunity.com/profiles/76561199555031734/" target="_blank" class="btn btn-ghost btn-3d">
+              <i class="fab fa-steam"></i> Профиль
+            </a>
+          </li>
+          <li class="person fade-item card-3d hover-glow">
+            <div class="person-avatar">
+              <i class="fas fa-code"></i>
+            </div>
+            <div class="person-info">
+              <strong>Govalsky</strong> — помощь в разработке
+            </div>
+            <a href="https://steamcommunity.com/profiles/76561199865457509/" target="_blank" class="btn btn-ghost btn-3d">
+              <i class="fab fa-steam"></i> Профиль
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Bad -->
+    <section id="bad" class="section fullpage parallax-section" 
+             style="background-image: url('https://images.gamewatcherstatic.com/image/file/8/42/107528/scrap_mechanic_65546454.JPG')"
+             data-title="Плохие люди" data-color="#e53935">
+      <div class="section-overlay dark-overlay"></div>
+      <div class="section-inner floating">
+        <h2 class="section-title fade-item large glitch-text" data-text="Плохие люди">Плохие люди</h2>
+        <ul class="people">
+          <li class="person fade-item card-3d hover-shake bad-person">
+            <div class="person-avatar bad-avatar">
+              <i class="fas fa-skull"></i>
+            </div>
+            <div class="person-info">
+              <strong>Ҝㄖㄒ-丂卂爪ㄩ尺卂ㄚ</strong> — Испортил карту
+            </div>
+            <a href="https://steamcommunity.com/profiles/76561199750669319/" target="_blank" class="btn btn-ghost btn-3d">
+              <i class="fab fa-steam"></i> Профиль
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer glass-panel">
+    <div class="footer-inner">
+      <span class="pulse-text">🎄 С Новым 2026 Годом! 🎄</span>
+      <div>Сайт разработали: <strong class="neon-text">SerLemon</strong></div>
+      <div class="footer-icons">
+        <button class="btn btn-icon" id="musicToggle">
+          <i class="fas fa-music"></i>
+        </button>
+        <button class="btn btn-icon" id="fullscreenToggle">
+          <i class="fas fa-expand"></i>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Аудио для эффектов -->
+  <audio id="confettiSound" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" preload="auto"></audio>
+  <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" preload="auto"></audio>
+  <audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-hover-sfx-1126.mp3" preload="auto"></audio>
+  <audio id="christmasMusic" loop src="https://assets.mixkit.co/music/preview/mixkit-christmas-loop-104.mp3" preload="auto"></audio>
+
+  <script src="code.js"></script>
+</body>
+</html>
